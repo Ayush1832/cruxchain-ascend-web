@@ -1,4 +1,3 @@
-
 import { Github, Twitter, MessageCircle } from 'lucide-react';
 
 const Footer = () => {
@@ -33,7 +32,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative py-20 border-t border-white/10">
+    <footer className="relative py-20 border-t border-gray-200 dark:border-white/10">
       {/* Background Effects */}
       <div className="protocol-bg opacity-50"></div>
       
@@ -44,7 +43,7 @@ const Footer = () => {
             <div className="font-display font-bold text-3xl gradient-text mb-6">
               Cruxchain
             </div>
-            <p className="text-gray-300 text-lg leading-relaxed max-w-md">
+            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed max-w-md">
               The Intent-Centric Blockchain – Building the future of seamless Web3 interaction through revolutionary intent-based technology.
             </p>
             <div className="mt-8">
@@ -53,7 +52,7 @@ const Footer = () => {
                   const element = document.getElementById('waitlist');
                   if (element) element.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="glow-button px-6 py-3 rounded-xl text-white font-semibold transition-all duration-300 hover:scale-105"
+                className="glow-button-light dark:glow-button px-6 py-3 rounded-xl text-white font-semibold transition-all duration-300 hover:scale-105"
               >
                 Join Waitlist
               </button>
@@ -62,17 +61,17 @@ const Footer = () => {
           
           {/* Quick Links */}
           <div>
-            <h3 className="font-bold text-white mb-6 text-xl">Resources</h3>
+            <h3 className="font-bold text-gray-900 dark:text-white mb-6 text-xl">Resources</h3>
             <div className="space-y-4">
               {quickLinks.map((link, index) => (
                 <div key={index} className="flex items-center">
                   <a 
                     href={link.href} 
-                    className="text-gray-400 hover:text-white transition-colors flex items-center"
+                    className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors flex items-center"
                   >
                     {link.label}
                     {link.soon && (
-                      <span className="ml-2 px-2 py-1 text-xs bg-blue-500/20 text-blue-400 rounded-full border border-blue-500/30">
+                      <span className="ml-2 px-2 py-1 text-xs bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-400 rounded-full border border-blue-200 dark:border-blue-500/30">
                         Soon
                       </span>
                     )}
@@ -84,15 +83,15 @@ const Footer = () => {
           
           {/* Social Links */}
           <div>
-            <h3 className="font-bold text-white mb-6 text-xl">Community</h3>
+            <h3 className="font-bold text-gray-900 dark:text-white mb-6 text-xl">Community</h3>
             <div className="space-y-4">
               {socialLinks.map((social, index) => (
                 <a 
                   key={index}
                   href={social.href} 
-                  className="flex items-center text-gray-400 hover:text-white transition-all duration-300 hover:scale-105 group"
+                  className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all duration-300 hover:scale-105 group"
                 >
-                  <div className="p-2 glass-effect rounded-lg mr-3 group-hover:bg-white/10">
+                  <div className="p-2 glass-effect-light dark:glass-effect rounded-lg mr-3 group-hover:bg-gray-100 dark:group-hover:bg-white/10">
                     {social.icon}
                   </div>
                   {social.label}
@@ -103,20 +102,20 @@ const Footer = () => {
         </div>
         
         {/* Bottom Section */}
-        <div className="border-t border-white/10 pt-8">
+        <div className="border-t border-gray-200 dark:border-white/10 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-gray-400 text-sm">
+            <div className="text-gray-600 dark:text-gray-400 text-sm">
               © 2025 Cruxchain. All Rights Reserved.
             </div>
             
             <div className="flex space-x-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
                 Privacy Policy
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
                 Terms of Service
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
                 Legal
               </a>
             </div>
@@ -124,8 +123,8 @@ const Footer = () => {
           
           {/* Protocol Info */}
           <div className="mt-8 text-center">
-            <div className="glass-effect p-4 rounded-xl inline-block">
-              <p className="text-gray-400 text-xs">
+            <div className="glass-effect-light dark:glass-effect p-4 rounded-xl inline-block">
+              <p className="text-gray-600 dark:text-gray-400 text-xs">
                 Built for developers, designed for users, optimized for the future of Web3
               </p>
             </div>

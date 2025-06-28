@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Check, CheckCircle, Rocket, Shield, Bot, Globe } from 'lucide-react';
 
@@ -84,10 +83,10 @@ const Roadmap = () => {
 
   const getStatusBadge = (status: string) => {
     const colors = {
-      completed: 'bg-green-500/20 text-green-400 border-green-500/30',
-      'in-progress': 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-      upcoming: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-      future: 'bg-gray-500/20 text-gray-400 border-gray-500/30'
+      completed: 'bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-400 border-green-200 dark:border-green-500/30',
+      'in-progress': 'bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-500/30',
+      upcoming: 'bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-400 border-purple-200 dark:border-purple-500/30',
+      future: 'bg-gray-100 dark:bg-gray-500/20 text-gray-700 dark:text-gray-400 border-gray-200 dark:border-gray-500/30'
     };
     
     const labels = {
@@ -111,15 +110,15 @@ const Roadmap = () => {
       
       <div className="container mx-auto px-4">
         <div className="text-center mb-20">
-          <div className="inline-block glass-effect p-3 rounded-xl mb-6">
-            <span className="text-purple-400 font-semibold text-sm uppercase tracking-wider">
+          <div className="inline-block glass-effect-light dark:glass-effect p-3 rounded-xl mb-6">
+            <span className="text-purple-600 dark:text-purple-400 font-semibold text-sm uppercase tracking-wider">
               Development Roadmap
             </span>
           </div>
           <h2 className="text-5xl md:text-6xl font-display font-bold mb-6 gradient-text">
             Our Journey
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             The path to revolutionizing blockchain interaction through intent-centric design
           </p>
         </div>
@@ -144,7 +143,7 @@ const Roadmap = () => {
                 </div>
                 
                 {/* Phase Content */}
-                <div className={`glass-effect p-8 rounded-2xl ml-20 md:ml-0 md:w-5/12 relative ${
+                <div className={`glass-effect-light dark:glass-effect p-8 rounded-2xl ml-20 md:ml-0 md:w-5/12 relative ${
                   index % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'
                 }`}>
                   {/* Content */}
@@ -156,26 +155,26 @@ const Roadmap = () => {
                           {phase.icon}
                         </div>
                         <div>
-                          <span className="text-sm text-gray-400 font-medium">{phase.phase}</span>
-                          <h3 className="text-2xl font-bold text-white">{phase.title}</h3>
+                          <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">{phase.phase}</span>
+                          <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{phase.title}</h3>
                         </div>
                       </div>
                       {getStatusBadge(phase.status)}
                     </div>
                     
                     {/* Description */}
-                    <p className="text-lg text-gray-300 font-medium">
+                    <p className="text-lg text-gray-700 dark:text-gray-300 font-medium">
                       {phase.description}
                     </p>
                     
                     {/* Details */}
-                    <p className="text-gray-400 leading-relaxed">
+                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                       {phase.details}
                     </p>
                   </div>
 
                   {/* Decorative Elements */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-gray-100/50 dark:via-white/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
               </div>
             ))}
@@ -184,11 +183,11 @@ const Roadmap = () => {
 
         {/* Bottom CTA */}
         <div className="text-center mt-20">
-          <div className="glass-effect p-8 rounded-2xl max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-white mb-4">
+          <div className="glass-effect-light dark:glass-effect p-8 rounded-2xl max-w-2xl mx-auto">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
               Be Part of the Journey
             </h3>
-            <p className="text-gray-300 mb-6">
+            <p className="text-gray-700 dark:text-gray-300 mb-6">
               Join our community and help shape the future of intent-centric blockchain technology.
             </p>
             <button 
@@ -196,7 +195,7 @@ const Roadmap = () => {
                 const element = document.getElementById('waitlist');
                 if (element) element.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="glow-button px-8 py-3 rounded-xl text-white font-semibold transition-all duration-300 hover:scale-105"
+              className="glow-button-light dark:glow-button px-8 py-3 rounded-xl text-white font-semibold transition-all duration-300 hover:scale-105"
             >
               Join Waitlist
             </button>
