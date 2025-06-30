@@ -74,9 +74,13 @@ const Features = () => {
   }, []);
 
   return (
-    <section id="features" ref={sectionRef} className="py-24 sm:py-28 md:py-32 relative overflow-hidden">
-      {/* Background Animation or Overlay */}
-      <div className="protocol-bg absolute inset-0 opacity-40 pointer-events-none z-0" />
+    <section
+      id="features"
+      ref={sectionRef}
+      className="py-24 sm:py-28 md:py-32 relative overflow-hidden bg-neutral-900"
+    >
+      {/* Optional SVG Overlay or Background Animation */}
+      <div className="protocol-bg absolute inset-0 opacity-30 pointer-events-none z-0" />
 
       <div className="container mx-auto px-4 sm:px-6 md:px-10 relative z-10">
         {/* Section Header */}
@@ -86,7 +90,7 @@ const Features = () => {
               Core Features
             </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 md:mb-6 gradient-text">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 md:mb-6 gradient-text text-white">
             Why Choose Cruxchain?
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
@@ -100,7 +104,7 @@ const Features = () => {
             <div
               key={index}
               ref={(el) => (cardsRef.current[index] = el)}
-              className="p-6 sm:p-7 md:p-8 rounded-2xl bg-[#0f172a] border border-white/5 group hover:shadow-xl hover:shadow-blue-500/10 transition duration-500 hover:scale-[1.02]"
+              className="p-6 sm:p-7 md:p-8 rounded-2xl bg-[#1f2937] border border-white/5 group hover:shadow-xl hover:shadow-blue-500/10 transition duration-500 hover:scale-[1.02]"
             >
               {/* Icon */}
               <div className="relative mb-4 md:mb-6">
