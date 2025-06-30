@@ -79,4 +79,4 @@ const Features = () => {
   );
 };
 
-export default Features
+export default Features;
