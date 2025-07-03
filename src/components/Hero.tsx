@@ -42,7 +42,7 @@ const Hero = () => {
       <div className="network-nodes"></div>
       <div className="floating-elements"></div>
       <div className="mesh-gradient"></div>
-      
+
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="max-w-5xl mx-auto">
           {/* Animated Logo/Title */}
@@ -50,16 +50,15 @@ const Hero = () => {
             <h1 className="text-7xl md:text-9xl font-display font-bold mb-6">
               <span className="gradient-text">
                 {displayText}
-                <span 
-                  className={`inline-block w-1 h-16 md:h-24 bg-current ml-2 ${
-                    cursorVisible ? 'opacity-100' : 'opacity-0'
-                  } transition-opacity duration-150`}
+                <span
+                  className={`inline-block w-1 h-16 md:h-24 bg-current ml-2 ${cursorVisible ? 'opacity-100' : 'opacity-0'
+                    } transition-opacity duration-150`}
                 >
                   |
                 </span>
               </span>
             </h1>
-            
+
             <div className="glass-effect-light dark:glass-effect p-4 rounded-2xl inline-block animate-fade-in-up animation-delay-400">
               <p className="text-xl md:text-3xl text-gray-800 dark:text-gray-200 font-medium">
                 The Intent-Centric Blockchain
@@ -69,19 +68,23 @@ const Hero = () => {
               </p>
             </div>
           </div>
-          
+
           {/* CTA Section */}
           <div className="space-y-6 animate-fade-in-up animation-delay-800">
-            <Button 
+            <Button
               onClick={scrollToWaitlist}
               className="glow-button-light dark:glow-button text-white px-12 py-6 rounded-2xl text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
             >
               Join Waitlist
             </Button>
-            
-            <p className="text-gray-600 dark:text-gray-400 text-sm max-w-md mx-auto">
-              Be the first to experience intent-driven blockchain interaction
-            </p>
+
+            <div className="mt-8 text-center">
+              <div className="glass-effect-light dark:glass-effect p-4 rounded-xl inline-block">
+                <p className="text-gray-600 dark:text-gray-400 text-xs">
+                  Be the first to experience intent-driven blockchain interaction
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Protocol Demo Hint */}
