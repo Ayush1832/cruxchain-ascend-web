@@ -1,7 +1,5 @@
-'use client';
-
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import Button  from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
@@ -34,43 +32,40 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Top Navbar */}
-      <nav
+      <nav 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'glass-navbar-light shadow-xl' : 'bg-transparent'
+          isScrolled ? 'glass-navbar-light shadow-2xl' : 'bg-transparent'
         }`}
       >
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-4 sm:px-2 sm:py-2">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <div
-              className="font-display font-bold text-3xl gradient-text cursor-pointer"
-              onClick={() => scrollToSection('hero')}
-            >
+            <div className="font-display font-bold text-3xl sm:text-2xl gradient-text cursor-pointer" 
+                 onClick={() => scrollToSection('hero')}>
               Cruxchain
             </div>
-
-            {/* Desktop Nav */}
+            
+            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               {navLinks.slice(0, -1).map((link) => (
-                <button
+                <button 
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
-                  className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-all duration-300 hover:scale-105 font-medium"
+                  className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-all duration-300 hover:scale-105 font-medium text-base sm:text-sm"
                 >
                   {link.label}
                 </button>
               ))}
-
-              <Button
+              
+              <Button 
                 onClick={() => scrollToSection('waitlist')}
-                className="glow-button-light text-white px-6 py-2 rounded-xl font-semibold transition-all duration-300 hover:scale-105"
+                className="glow-button-light text-white px-6 py-2 rounded-xl font-semibold transition-all duration-300 hover:scale-105 text-base sm:text-sm"
               >
                 Join Waitlist
               </Button>
             </div>
 
-            {/* Mobile Nav Button */}
+            {/* Mobile Menu Button */}
             <div className="md:hidden">
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -86,11 +81,8 @@ const Navbar = () => {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-40 md:hidden">
-          <div
-            className="absolute inset-0 bg-black/20 dark:bg-black/60 backdrop-blur-sm"
-            onClick={() => setIsMobileMenuOpen(false)}
-          ></div>
-
+          <div className="absolute inset-0 bg-black/20 dark:bg-black/60 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)}></div>
+          
           <div className="relative glass-effect-light dark:glass-effect m-4 mt-20 rounded-2xl p-6">
             <div className="space-y-4">
               {navLinks.map((link) => (

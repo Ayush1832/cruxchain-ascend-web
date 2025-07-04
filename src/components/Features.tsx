@@ -113,7 +113,7 @@ const Features = () => {
     <section
       id="features"
       ref={containerRef}
-      className="relative w-full h-[700vh] pt-10"
+      className="relative w-full h-[700vh] pt-10 sm:pt-6"
     >
       {/* Background layers */}
       <div className="protocol-bg absolute inset-0 z-0"></div>
@@ -123,12 +123,10 @@ const Features = () => {
 
       {/* Section Title */}
       <div className="sticky top-32 z-20 w-full text-center">
-        <h2 className="text-5xl font-display font-bold mb-6 gradient-text">
+        <h2 className="text-6xl font-display font-bold gradient-text">
           Features
         </h2>
       </div>
-
-
       {/* Sticky Container */}
       <div
         ref={stickyRef}
@@ -207,7 +205,7 @@ const Features = () => {
 
           {/* Horizontal Cards */}
           <div
-            className="flex h-full w-full relative z-10 duration-300"
+            className="flex h-full w-full relative z-10 duration-900"
             style={{
               width: `${totalSlides * 100}vw`,
               transform: `translateX(-${translateX}vw)`,

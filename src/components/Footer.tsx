@@ -1,4 +1,5 @@
 import { Github, Twitter, MessageCircle } from 'lucide-react';
+import Button from '@/components/ui/button';
 
 const Footer = () => {
   const quickLinks = [
@@ -36,26 +37,26 @@ const Footer = () => {
       {/* Background Effects */}
       <div className="protocol-bg opacity-50"></div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+      <div className="container mx-auto px-4 sm:px-2 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-12">
           {/* Company Info */}
           <div className="md:col-span-2">
-            <div className="font-display font-bold text-3xl gradient-text mb-6">
+            <div className="font-display font-bold text-3xl sm:text-2xl gradient-text mb-6">
               Cruxchain
             </div>
-            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed max-w-md">
+            <p className="text-gray-700 dark:text-gray-300 text-lg sm:text-base leading-relaxed max-w-md">
               The Intent-Centric Blockchain – Building the future of seamless Web3 interaction through revolutionary intent-based technology.
             </p>
             <div className="mt-8">
-              <button
+              <Button
                 onClick={() => {
                   const element = document.getElementById('waitlist');
                   if (element) element.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="glow-button-light dark:glow-button px-6 py-3 rounded-xl text-white font-semibold transition-all duration-300 hover:scale-105"
+                className="glow-button-light dark:glow-button px-6 py-3 rounded-xl text-white font-semibold transition-all duration-300 hover:scale-105 text-base sm:text-sm"
               >
                 Join Waitlist
-              </button>
+              </Button>
             </div>
           </div>
 
