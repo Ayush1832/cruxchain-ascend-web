@@ -64,29 +64,29 @@ const Features = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
+  const firstCardRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
-
-  const totalSlides = features.length;
-  const slideWidth = 100; // percent vw
-  const maxScroll = (totalSlides - 1) * slideWidth;
-  const translateX = Math.min(progress * maxScroll, maxScroll);
 
   useEffect(() => {
     if (!stickyRef.current || !containerRef.current) return;
 
-    const scrollTrigger = ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: 'top top',
-      end: () => `+=${window.innerHeight * (totalSlides - 1)}`,
-      scrub: 1,
+    const scrollHeight = containerRef.current.offsetHeight;
+    const viewportHeight = window.innerHeight;
+
+    ScrollTrigger.create({
+      trigger: stickyRef.current,
+      start: 'top+=150 top',
+      end: `+=${scrollHeight - viewportHeight}`,
+      scrub: 1.2,
       onUpdate: (self) => {
         setProgress(self.progress);
       },
     });
 
-    return () => scrollTrigger.kill();
+    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
   }, []);
 
+  // Animate SVG strokes based on scroll progress
   useEffect(() => {
     if (!svgRef.current) return;
 
@@ -104,28 +104,35 @@ const Features = () => {
     });
   }, [progress]);
 
+  const totalSlides = features.length;
+  const slideWidth = 100;
+  const maxScroll = (totalSlides - 1) * slideWidth;
+  const translateX = Math.min(progress * maxScroll, maxScroll);
+
   return (
     <section
       id="features"
-      className={`relative w-full h-[${totalSlides * 100}vh] pt-10`}
+      className="relative w-full h-[800vh] pt-10"
       ref={containerRef}
     >
       {/* Background elements */}
-      <div className="protocol-bg absolute inset-0 z-0" />
-      <div className="network-nodes absolute inset-0 z-0" />
-      <div className="floating-elements absolute inset-0 z-0" />
-      <div className="mesh-gradient absolute inset-0 z-0" />
+      <div className="protocol-bg absolute inset-0 z-0"></div>
+      <div className="network-nodes absolute inset-0 z-0"></div>
+      <div className="floating-elements absolute inset-0 z-0"></div>
+      <div className="mesh-gradient absolute inset-0 z-0"></div>
 
+      {/* Title */}
       <div className="z-10 relative mb-32">
         <h2 className="text-5xl font-bold text-center text-white">Features</h2>
       </div>
 
+      {/* Sticky scrolling container */}
       <div
         className="sticky top-0 h-screen w-full overflow-hidden z-10"
         ref={stickyRef}
       >
         <div className="relative h-full w-full">
-          {/* SVG path animation */}
+          {/* SVG Background Animation */}
           <svg
             className="absolute left-0 top-1/2 -translate-y-1/2 w-[300vw] h-auto z-0 pointer-events-none"
             ref={svgRef}
@@ -195,9 +202,9 @@ const Features = () => {
             </defs>
           </svg>
 
-          {/* Cards */}
+          {/* Feature Cards */}
           <div
-            className="flex h-full w-full relative z-10 transition-transform duration-300 ease-out"
+            className="flex h-full w-full relative z-10 duration-300"
             style={{
               width: `${totalSlides * 100}vw`,
               transform: `translateX(-${translateX}vw)`,
@@ -206,6 +213,7 @@ const Features = () => {
             {features.map((feature, index) => (
               <div
                 key={index}
+                ref={index === 0 ? firstCardRef : null}
                 className="w-screen flex items-center justify-center p-4 flex-shrink-0"
               >
                 <div className="bg-white/70 dark:bg-black/30 backdrop-blur-xl rounded-2xl p-8 max-w-md text-center shadow-xl border border-white/10">
