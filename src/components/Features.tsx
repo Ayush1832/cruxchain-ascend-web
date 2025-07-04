@@ -29,54 +29,62 @@ const Features = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+  const progressRef = useRef(0);
   const [progress, setProgress] = useState(0);
 
   const totalSlides = features.length;
-  const slideWidth = 100;
-  const maxScroll = (totalSlides - 1) * slideWidth;
-
-  const translateX = Math.min(progress * maxScroll, maxScroll);
 
   useEffect(() => {
     if (!stickyRef.current || !containerRef.current) return;
 
     const scrollTrigger = ScrollTrigger.create({
       trigger: stickyRef.current,
-      start: 'top+=180 top',
+      start: 'top top',
       end: () => `+=${containerRef.current!.offsetHeight - window.innerHeight}`,
-      scrub: 1.5,
-      onUpdate: (self) => setProgress(self.progress),
+      scrub: 1,
+      onUpdate: (self) => {
+        progressRef.current = self.progress;
+        setProgress(self.progress);
+      },
     });
 
     return () => scrollTrigger.kill();
   }, []);
 
   useEffect(() => {
-    if (!svgRef.current || !stickyRef.current) return;
+    if (!svgRef.current || !stickyRef.current || !containerRef.current) return;
 
-    const lines = svgRef.current.querySelectorAll('.scaling-line');
-    lines.forEach((line) => {
-      const path = line as SVGPathElement;
+    const lines = svgRef.current.querySelectorAll<SVGPathElement>('.scaling-line');
+    const triggers: ScrollTrigger[] = [];
+
+    lines.forEach((path) => {
       const length = path.getTotalLength();
       path.style.strokeDasharray = `${length}`;
       path.style.strokeDashoffset = `${length}`;
+      path.style.transition = 'none';
 
-      const setOffset = gsap.quickTo(path, 'strokeDashoffset', {
-        duration: 1,
-        ease: 'power3.out',
+      const animate = gsap.quickTo(path, 'strokeDashoffset', {
+        duration: 0.4,
+        ease: 'power2.out',
       });
 
-      ScrollTrigger.create({
+      const trigger = ScrollTrigger.create({
         trigger: stickyRef.current,
-        start: 'top+=150 top',
+        start: 'top top',
         end: () => `+=${containerRef.current!.offsetHeight - window.innerHeight}`,
-        scrub: 1.5,
-        onUpdate: (self) => setOffset(length * (1 - self.progress)),
+        scrub: true,
+        onUpdate: (self) => {
+          animate(length * (1 - self.progress));
+        },
       });
+
+      triggers.push(trigger);
     });
 
-    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
+    return () => triggers.forEach((t) => t.kill());
   }, []);
+
+  const translateX = Math.min(progress * (totalSlides - 1) * 100, (totalSlides - 1) * 100);
 
   return (
     <section
@@ -84,37 +92,37 @@ const Features = () => {
       className="relative w-full h-[700vh] pt-10"
       ref={containerRef}
     >
-      {/* Background Layers */}
+      {/* Background layers */}
       <div className="protocol-bg absolute inset-0 z-0" />
       <div className="network-nodes absolute inset-0 z-0" />
       <div className="floating-elements absolute inset-0 z-0" />
       <div className="mesh-gradient absolute inset-0 z-0" />
 
-      {/* Section Heading */}
-      <div className="z-10 relative mb-32">
-        <h2 className="text-5xl md:text-6xl font-display font-bold text-center gradient-text text-white">Features</h2>
+      <div className="z-30 sticky top-24">
+        <h2 className="text-6xl font-display font-bold text-center gradient-text text-white">
+          Features
+        </h2>
       </div>
 
-      {/* Sticky Scroll Section */}
       <div
         className="sticky top-0 h-screen w-full overflow-visible z-10"
         ref={stickyRef}
       >
         <div className="relative h-full w-full overflow-visible">
-          {/* Scrolling SVG Path */}
+          {/* SVG */}
           <svg
             ref={svgRef}
             className="absolute left-0 top-1/2 -translate-y-1/2 w-[700vw] h-auto z-0 pointer-events-none"
-            viewBox="0 0 5291 1193"
+            viewBox="0 0 9291 5193"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="xMinYMid meet"
             style={{
-              transform: `translate(-${translateX}vw, -160vh)`,
-              transition: 'transform 0.3s ease-out',
+              transform: `translateX(-${translateX}vw)`,
+              transition: 'transform 0.25s ease-out',
             }}
           >
- <path
+            <path
               d="M425.836 542.641C650.167 733.903 887.603 566.853 935.526 529.195C944.11 522.45 952.985 516.099 962.152 510.141C1171.68 373.54 1299.07 395.402 1385.34 420.141C1521.34 459.141 1554.34 528.141 1706.34 661.141C1775.55 721.702 1833.34 752.141 1875.34 777.141C1875.34 777.141 2244.07 1014.13 2469.45 633.384C2495.48 589.412 2522.64 540.304 2548.84 490.641C2625.84 344.641 2676.02 271.737 2739.34 196.033C2830.84 86.6406 2998.94 11.1406 3167.34 11.1406C3490.7 11.1406 3752.84 273.278 3752.84 596.641C3752.84 596.641 3768.84 1033.64 3333.84 1156.64C2894.35 1280.91 2585.84 933.641 2584.84 597.641C2583.84 261.641 2823.84 86.6406 3009.84 33.6406C3212.3 -24.0508 3614.84 25.6406 3731.84 434.641C3762.57 542.083 3762.66 731.291 3801.75 878.966C3831.42 991.081 3927.02 1081.81 4080.84 1073.64C4306.84 1061.64 4408.34 767.141 4408.34 767.141C4408.34 767.141 4490.64 544.033 4610.34 534.141C4731.34 524.141 4805.34 658.141 4843.34 703.141C4922.58 796.983 5005.34 942.141 5270.34 946.141"
               stroke="url(#paint0_linear)"
               strokeWidth="20"
@@ -139,43 +147,41 @@ const Features = () => {
               className="scaling-line"
             />
             <defs>
-              <linearGradient
-                id="paint0_linear"
-                x1="415"
-                y1="596"
-                x2="5280"
-                y2="596"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#6366F1" stopOpacity="0" />
-                <stop offset="1" stopColor="#8B5CF6" />
+              <linearGradient id="paint0_linear" x1="415.336" y1="596.789" x2="5280.84" y2="596.789" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#6438D6" stopOpacity="0" />
+                <stop offset="0.0289996" stopColor="#6438D6" stopOpacity="0.20917" />
+                <stop offset="0.0589996" stopColor="#6438D6" stopOpacity="0.41763" />
+                <stop offset="0.31989" stopColor="#6438D6" stopOpacity="0.59708" />
+                <stop offset="0.43827" stopColor="#6438D6" stopOpacity="0.74332" />
+                <stop offset="0.56113" stopColor="#6438D6" stopOpacity="0.85657" />
+                <stop offset="0.69036" stopColor="#6438D6" stopOpacity="0.93699" />
+                <stop offset="0.83024" stopColor="#6438D6" stopOpacity="0.98473" />
+                <stop offset="1" stopColor="#6438D6" />
               </linearGradient>
-              <linearGradient
-                id="paint1_linear"
-                x1="423"
-                y1="570"
-                x2="5086"
-                y2="570"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#F472B6" stopOpacity="0" />
-                <stop offset="1" stopColor="#EC4899" />
+              <linearGradient id="paint1_linear" x1="423.336" y1="570.508" x2="5086.84" y2="570.508" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#FFC4EC" stopOpacity="0" />
+                <stop offset="0.04815" stopColor="#FFC4EC" stopOpacity="0.06926" />
+                <stop offset="0.0889996" stopColor="#FFC5EA" stopOpacity="0.4" />
+                <stop offset="0.194" stopColor="#FFC5E9" stopOpacity="0.58017" />
+                <stop offset="0.329" stopColor="#FFC6E7" stopOpacity="0.7614" />
+                <stop offset="0.78312" stopColor="#FFC6E7" stopOpacity="0.89173" />
+                <stop offset="0.9129" stopColor="#FFC6E6" stopOpacity="0.97128" />
+                <stop offset="1" stopColor="#FFC6E6" />
               </linearGradient>
-              <linearGradient
-                id="paint2_linear"
-                x1="0"
-                y1="482"
-                x2="5290"
-                y2="482"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#FB7185" stopOpacity="0" />
-                <stop offset="1" stopColor="#E11D48" />
+              <linearGradient id="paint2_linear" x1="-7.73967e-07" y1="482.878" x2="5290.84" y2="482.878" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#E81899" stopOpacity="0" />
+                <stop offset="0.0639996" stopColor="#E81899" stopOpacity="0.1624" />
+                <stop offset="0.0889996" stopColor="#E81899" stopOpacity="0.4142" />
+                <stop offset="0.45525" stopColor="#E81899" stopOpacity="0.62382" />
+                <stop offset="0.61741" stopColor="#E81899" stopOpacity="0.78706" />
+                <stop offset="0.76673" stopColor="#E81899" stopOpacity="0.90407" />
+                <stop offset="0.89869" stopColor="#E81899" stopOpacity="0.97506" />
+                <stop offset="0.99936" stopColor="#E81899" />
               </linearGradient>
             </defs>
           </svg>
 
-          {/* Horizontal Feature Cards */}
+          {/* Horizontal Scroll Cards */}
           <div
             className="flex h-full w-full relative z-10"
             style={{

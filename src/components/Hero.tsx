@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
@@ -15,7 +17,6 @@ const Hero = () => {
         currentIndex++;
       } else {
         clearInterval(timer);
-        // Start cursor blinking after typing is complete
         setTimeout(() => {
           const cursorTimer = setInterval(() => {
             setCursorVisible(prev => !prev);
@@ -24,7 +25,6 @@ const Hero = () => {
         }, 500);
       }
     }, 150);
-
     return () => clearInterval(timer);
   }, []);
 
@@ -51,8 +51,9 @@ const Hero = () => {
               <span className="gradient-text">
                 {displayText}
                 <span
-                  className={`inline-block w-1 h-16 md:h-24 bg-current ml-2 ${cursorVisible ? 'opacity-100' : 'opacity-0'
-                    } transition-opacity duration-150`}
+                  className={`inline-block w-1 h-16 md:h-24 bg-current ml-2 ${
+                    cursorVisible ? 'opacity-100' : 'opacity-0'
+                  } transition-opacity duration-150`}
                 >
                   |
                 </span>
@@ -71,12 +72,7 @@ const Hero = () => {
 
           {/* CTA Section */}
           <div className="space-y-6 animate-fade-in-up animation-delay-800">
-            <Button
-              onClick={scrollToWaitlist}
-              className="glow-button-light dark:glow-button text-white px-12 py-6 rounded-2xl text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
-            >
-              Join Waitlist
-            </Button>
+            <Button onClick={scrollToWaitlist}>Join Waitlist</Button>
 
             <div className="mt-8 text-center">
               <div className="glass-effect-light dark:glass-effect p-4 rounded-xl inline-block">
@@ -94,7 +90,7 @@ const Hero = () => {
               <div className="font-mono text-blue-600 dark:text-blue-300 bg-blue-50 dark:bg-black/20 rounded-lg p-3 w-full text-center mb-4">
                 "Swap 100 USDC → ETH"
               </div>
-              {/* Arrow Button Below Intent Box */}
+
               <button
                 type="button"
                 aria-label="Scroll for more"
