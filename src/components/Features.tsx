@@ -67,7 +67,8 @@ const Features = () => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    if (!stickyRef.current || !containerRef.current) return;
+    if (!stickyRef.current || !containerRef.current || window.innerWidth < 768)
+      return;
 
     const scrollHeight = containerRef.current.scrollHeight;
     const viewportHeight = window.innerHeight;
@@ -88,7 +89,7 @@ const Features = () => {
   }, []);
 
   useEffect(() => {
-    if (!svgRef.current) return;
+    if (!svgRef.current || window.innerWidth < 768) return;
 
     const lines = svgRef.current.querySelectorAll('.scaling-line');
     lines.forEach((line) => {
@@ -113,7 +114,7 @@ const Features = () => {
     <section
       id="features"
       ref={containerRef}
-      className="relative w-full h-[700vh] pt-10 sm:pt-6"
+      className="relative w-full pt-10 sm:pt-6 md:h-[700vh]"
     >
       {/* Background layers */}
       <div className="protocol-bg absolute inset-0 z-0"></div>
@@ -123,14 +124,15 @@ const Features = () => {
 
       {/* Section Title */}
       <div className="sticky top-32 z-20 w-full text-center">
-        <h2 className="text-6xl font-display font-bold gradient-text">
+        <h2 className="text-4xl md:text-6xl font-display font-bold gradient-text">
           Features
         </h2>
       </div>
-      {/* Sticky Container */}
+
+      {/* Desktop Sticky SVG + Cards */}
       <div
         ref={stickyRef}
-        className="sticky top-0 h-screen w-full overflow-hidden z-10"
+        className="hidden md:block sticky top-0 h-screen w-full overflow-hidden z-10"
       >
         <div className="relative h-full w-full">
           {/* SVG Path Animation */}
@@ -229,6 +231,26 @@ const Features = () => {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Mobile Vertical Stack */}
+      <div className="md:hidden relative z-10 mt-8 px-4 space-y-6">
+        {features.map((feature, index) => (
+          <div
+            key={index}
+            className="bg-white/70 dark:bg-black/30 backdrop-blur-xl rounded-2xl p-6 text-center shadow-xl border border-white/10"
+          >
+            <div className="mb-4 text-blue-500 mx-auto w-fit">
+              {feature.icon}
+            </div>
+            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+              {feature.title}
+            </h3>
+            <p className="text-gray-700 dark:text-gray-300 text-base">
+              {feature.description}
+            </p>
+          </div>
+        ))}
       </div>
     </section>
   );
