@@ -131,10 +131,17 @@ const Features = () => {
       >
         {/* Section Title */}
         <div className="sticky top-32 z-20 text-center">
-          <h2 className="text-4xl md:text-6xl font-display font-bold gradient-text">
+          <h2
+            className="text-4xl md:text-6xl font-display font-bold inline-block px-4 py-2 text-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
+            style={{
+                  WebkitTextStroke: '1px black',
+                  WebkitTextFillColor: 'white',
+            }}
+          >
             Features
           </h2>
         </div>
+
         <div className="relative h-full w-full">
           {/* SVG Path Animation */}
           <svg

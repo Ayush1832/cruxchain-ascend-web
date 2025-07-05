@@ -54,18 +54,22 @@ const Hero = () => {
           {/* Animated Logo/Title */}
           <div className="mb-8">
             <h1 className="text-7xl md:text-9xl sm:text-4xl font-display font-bold mb-6">
-              <span className="gradient-text">
+              <span
+                className="text-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
+                style={{
+                  WebkitTextStroke: '1px black',
+                  WebkitTextFillColor: 'white',
+                }}
+              >
                 {displayText}
                 <span
-                  className={`inline-block w-1 h-16 md:h-24 sm:h-8 bg-current ml-2 ${
-                    cursorVisible ? 'opacity-100' : 'opacity-0'
-                  } transition-opacity duration-150`}
+                  className={`inline-block w-1 h-16 md:h-24 sm:h-8 ml-2 ${cursorVisible ? 'opacity-100' : 'opacity-0'
+                    } transition-opacity duration-150`}
                 >
                   |
                 </span>
               </span>
             </h1>
-
             {/* Subtitle */}
             <div className="glass-effect-light dark:glass-effect p-4 rounded-2xl inline-block animate-fade-in-up animation-delay-400">
               <p className="text-xl md:text-3xl sm:text-lg text-gray-800 dark:text-gray-200 font-medium">

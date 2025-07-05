@@ -1,12 +1,15 @@
-import { Github, Twitter, MessageCircle } from 'lucide-react';
+'use client';
+
+import { Github, Twitter } from 'lucide-react';
 import Button from '@/components/ui/button';
+import { MessageCircle } from 'lucide-react';
 
 const Footer = () => {
   const quickLinks = [
     { label: 'Documentation', href: '#', soon: true },
     { label: 'GitHub', href: '#', soon: false },
     { label: 'Explorer', href: '#', soon: true },
-    { label: 'Whitepaper', href: '#', soon: true }
+    { label: 'Whitepaper', href: '#', soon: true },
   ];
 
   const socialLinks = [
@@ -19,7 +22,7 @@ const Footer = () => {
         </svg>
       ),
       href: '#',
-      label: 'Discord'
+      label: 'Discord',
     },
     {
       icon: (
@@ -28,14 +31,13 @@ const Footer = () => {
         </svg>
       ),
       href: '#',
-      label: 'Telegram'
-    }
+      label: 'Telegram',
+    },
   ];
 
   return (
-    <footer className="relative py-20 border-t border-gray-200 dark:border-white/10">
-      {/* Background Effects */}
-      <div className="protocol-bg opacity-50"></div>
+    <footer className="relative py-10 border-t border-gray-200 dark:border-white/10 glass-effect-light dark:glass-effect">
+      <div className="protocol-bg opacity-50" />
 
       <div className="container mx-auto px-4 sm:px-2 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-12">
@@ -45,7 +47,8 @@ const Footer = () => {
               Cruxchain
             </div>
             <p className="text-gray-700 dark:text-gray-300 text-lg sm:text-base leading-relaxed max-w-md">
-              The Intent-Centric Blockchain – Building the future of seamless Web3 interaction through revolutionary intent-based technology.
+              The Intent-Centric Blockchain – Building the future of seamless Web3 interaction
+              through revolutionary intent-based technology.
             </p>
             <div className="mt-8">
               <Button
@@ -103,20 +106,29 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-200 dark:border-white/10 pt-8">
+        <div className="border-t border-gray-200 dark:border-white/10">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-600 dark:text-gray-400 text-sm">
               © 2025 Cruxchain. All Rights Reserved.
             </div>
 
             <div className="flex space-x-6 text-sm">
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+              <a
+                href="#"
+                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >
                 Privacy Policy
               </a>
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+              <a
+                href="#"
+                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >
                 Terms of Service
               </a>
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+              <a
+                href="#"
+                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >
                 Legal
               </a>
             </div>

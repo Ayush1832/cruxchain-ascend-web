@@ -132,110 +132,117 @@ const Roadmap = () => {
 							Development Roadmap
 						</span>
 					</div>
-					<h2 className="text-5xl md:text-6xl sm:text-3xl font-display font-bold mb-6 gradient-text">
-						Our Journey
-					</h2>
-					<p className="text-xl sm:text-base text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-						The path to revolutionizing blockchain interaction through
-						intent-centric design
-					</p>
-				</div>
+					<div className=" text-center">
 
-				<div className="max-w-6xl mx-auto">
-					<div className="relative">
-						{/* Main Timeline Line */}
-						<div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-green-500 opacity-30"></div>
+						<h2
+							className="text-4xl md:text-6xl sm:text-3xl font-display mb-6 font-bold inline-block px-4 py-2 text-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
+							style={{
+								WebkitTextStroke: '1px black',
+								WebkitTextFillColor: 'white',
+							}}
+						>
+							Our Journey
+						</h2>
+					</div>
+						<p className="text-xl sm:text-base text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+							The path to revolutionizing blockchain interaction through
+							intent-centric design
+						</p>
+					</div>
 
-						{roadmapPhases.map((phase, index) => (
-							<div
-								key={index}
-								className={`timeline-item relative flex items-center mb-16 ${
-									visibleItems.includes(index) ? 'animate' : ''
-								} ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
-							>
-								{/* Timeline Node */}
+					<div className="max-w-6xl mx-auto">
+						<div className="relative">
+							{/* Main Timeline Line */}
+							<div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-green-500 opacity-30"></div>
+
+							{roadmapPhases.map((phase, index) => (
 								<div
-									className={`absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-r ${getStatusColor(
-										phase.status
-									)} z-10 flex items-center justify-center shadow-lg`}
+									key={index}
+									className={`timeline-item relative flex items-center mb-16 ${visibleItems.includes(index) ? 'animate' : ''
+										} ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
 								>
-									{phase.status === 'completed' && (
-										<Check className="w-3 h-3 text-white" />
-									)}
-								</div>
-
-								{/* Phase Content */}
-								<div
-									className={`glass-effect-light dark:glass-effect p-8 rounded-2xl ml-20 md:ml-0 md:w-5/12 relative ${
-										index % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'
-									}`}
-								>
-									{/* Content */}
-									<div className="space-y-4">
-										{/* Header */}
-										<div className="flex items-center justify-between flex-wrap gap-3">
-											<div className="flex items-center space-x-3">
-												<div
-													className={`p-3 bg-gradient-to-r ${getStatusColor(
-														phase.status
-													)} rounded-xl`}
-												>
-													{phase.icon}
-												</div>
-												<div>
-													<span className="text-sm text-gray-600 dark:text-gray-400 font-medium">
-														{phase.phase}
-													</span>
-													<h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-														{phase.title}
-													</h3>
-												</div>
-											</div>
-											{getStatusBadge(phase.status)}
-										</div>
-
-										{/* Description */}
-										<p className="text-lg text-gray-700 dark:text-gray-300 font-medium">
-											{phase.description}
-										</p>
-
-										{/* Details */}
-										<p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-											{phase.details}
-										</p>
+									{/* Timeline Node */}
+									<div
+										className={`absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-r ${getStatusColor(
+											phase.status
+										)} z-10 flex items-center justify-center shadow-lg`}
+									>
+										{phase.status === 'completed' && (
+											<Check className="w-3 h-3 text-white" />
+										)}
 									</div>
 
-									{/* Decorative Elements */}
-									<div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-gray-100/50 dark:via-white/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-								</div>
-							</div>
-						))}
-					</div>
-				</div>
+									{/* Phase Content */}
+									<div
+										className={`glass-effect-light dark:glass-effect p-8 rounded-2xl ml-20 md:ml-0 md:w-5/12 relative ${index % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'
+											}`}
+									>
+										{/* Content */}
+										<div className="space-y-4">
+											{/* Header */}
+											<div className="flex items-center justify-between flex-wrap gap-3">
+												<div className="flex items-center space-x-3">
+													<div
+														className={`p-3 bg-gradient-to-r ${getStatusColor(
+															phase.status
+														)} rounded-xl`}
+													>
+														{phase.icon}
+													</div>
+													<div>
+														<span className="text-sm text-gray-600 dark:text-gray-400 font-medium">
+															{phase.phase}
+														</span>
+														<h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+															{phase.title}
+														</h3>
+													</div>
+												</div>
+												{getStatusBadge(phase.status)}
+											</div>
 
-				{/* Bottom CTA */}
-				<div className="text-center mt-20">
-					<div className="glass-effect-light dark:glass-effect p-8 rounded-2xl max-w-2xl mx-auto">
-						<h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-							Be Part of the Journey
-						</h3>
-						<p className="text-gray-700 dark:text-gray-300 mb-6">
-							Join our community and help shape the future of intent-centric
-							blockchain technology.
-						</p>
-						<Button
-							onClick={() => {
-								const element = document.getElementById('waitlist');
-								if (element)
-									element.scrollIntoView({ behavior: 'smooth' });
-							}}
-							className="glow-button-light dark:glow-button px-8 py-3 rounded-xl text-white font-semibold transition-all duration-300 hover:scale-105"
-						>
-							Join Waitlist
-						</Button>
+											{/* Description */}
+											<p className="text-lg text-gray-700 dark:text-gray-300 font-medium">
+												{phase.description}
+											</p>
+
+											{/* Details */}
+											<p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+												{phase.details}
+											</p>
+										</div>
+
+										{/* Decorative Elements */}
+										<div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-gray-100/50 dark:via-white/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+									</div>
+								</div>
+							))}
+						</div>
+					</div>
+
+					{/* Bottom CTA */}
+					<div className="text-center mt-20">
+						<div className="glass-effect-light dark:glass-effect p-8 rounded-2xl max-w-2xl mx-auto">
+							<h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+								Be Part of the Journey
+							</h3>
+							<p className="text-gray-700 dark:text-gray-300 mb-6">
+								Join our community and help shape the future of intent-centric
+								blockchain technology.
+							</p>
+							<Button
+								onClick={() => {
+									const element = document.getElementById('waitlist');
+									if (element)
+										element.scrollIntoView({ behavior: 'smooth' });
+								}}
+								className="glow-button-light dark:glow-button px-8 py-3 rounded-xl text-white font-semibold transition-all duration-300 hover:scale-105"
+							>
+								Join Waitlist
+							</Button>
+						</div>
 					</div>
 				</div>
-			</div>
 		</section>
 	);
 };
