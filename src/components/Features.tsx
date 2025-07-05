@@ -122,18 +122,19 @@ const Features = () => {
       <div className="floating-elements absolute inset-0 z-0"></div>
       <div className="mesh-gradient absolute inset-0 z-0"></div>
 
-      {/* Section Title */}
-      <div className="sticky top-32 z-20 w-full text-center">
-        <h2 className="text-4xl md:text-6xl font-display font-bold gradient-text">
-          Features
-        </h2>
-      </div>
+
 
       {/* Desktop Sticky SVG + Cards */}
       <div
         ref={stickyRef}
         className="hidden md:block sticky top-0 h-screen w-full overflow-hidden z-10"
       >
+        {/* Section Title */}
+        <div className="sticky top-32 z-20 text-center">
+          <h2 className="text-4xl md:text-6xl font-display font-bold gradient-text">
+            Features
+          </h2>
+        </div>
         <div className="relative h-full w-full">
           {/* SVG Path Animation */}
           <svg
@@ -209,7 +210,7 @@ const Features = () => {
           <div
             className="flex h-full w-full relative z-10 duration-900"
             style={{
-              width: `${totalSlides * 100}vw`,
+              width: `${totalSlides * 200}vw`,
               transform: `translateX(-${translateX}vw)`,
             }}
           >
