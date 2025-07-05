@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import Button  from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { Mail, Users, Zap } from 'lucide-react';
@@ -27,15 +27,15 @@ const Waitlist = () => {
   };
 
   return (
-    <section id="waitlist" className="py-32 relative">
+    <section id="waitlist" className="py-32 sm:py-16 relative">
       {/* Background Effects */}
       <div className="protocol-bg"></div>
       <div className="network-nodes"></div>
       
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 sm:px-2">
         <div className="max-w-4xl mx-auto text-center">
           {/* Main Waitlist Card */}
-          <div className="gradient-border-light dark:gradient-border p-12 rounded-3xl relative">
+          <div className="gradient-border-light dark:gradient-border p-12 sm:p-4 rounded-3xl relative">
             <div className="space-y-8">
               {/* Header */}
               <div className="space-y-4">
@@ -45,11 +45,11 @@ const Waitlist = () => {
                   </span>
                 </div>
                 
-                <h2 className="text-5xl md:text-6xl font-display font-bold gradient-text">
+                <h2 className="text-5xl md:text-6xl sm:text-3xl font-display font-bold gradient-text">
                   Join the Revolution
                 </h2>
                 
-                <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-xl md:text-2xl sm:text-base text-gray-700 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
                   Be the first to test Cruxchain and experience the future of intent-centric blockchain interaction.
                 </p>
               </div>
