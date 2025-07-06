@@ -53,7 +53,7 @@ const Hero = () => {
         <div className="max-w-5xl mx-auto">
           {/* Animated Logo/Title */}
           <div className="mb-8">
-            <h1 className="text-7xl md:text-9xl sm:text-4xl font-display font-bold mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-display font-bold mb-6 whitespace-nowrap">
               <span
                 className="text-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
                 style={{
@@ -63,13 +63,18 @@ const Hero = () => {
               >
                 {displayText}
                 <span
-                  className={`inline-block w-1 h-16 md:h-24 sm:h-8 ml-2 ${cursorVisible ? 'opacity-100' : 'opacity-0'
+                  className={`align-middle inline-block ml-2 w-[2px] ${cursorVisible ? 'opacity-100' : 'opacity-0'
                     } transition-opacity duration-150`}
+                  style={{
+                    height: '1em', // Makes cursor match text height
+                    backgroundColor: 'black', // Optional styling
+                  }}
                 >
-                  |
+                  &nbsp;
                 </span>
               </span>
             </h1>
+
             {/* Subtitle */}
             <div className="glass-effect-light dark:glass-effect p-4 rounded-2xl inline-block animate-fade-in-up animation-delay-400">
               <p className="text-xl md:text-3xl sm:text-lg text-gray-800 dark:text-gray-200 font-medium">
