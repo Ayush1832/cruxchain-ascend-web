@@ -17,10 +17,9 @@ const Hero = () => {
         currentIndex++;
       } else {
         clearInterval(timer);
-        // Start cursor blinking after typing is complete
         setTimeout(() => {
           const cursorTimer = setInterval(() => {
-            setCursorVisible(prev => !prev);
+            setCursorVisible((prev) => !prev);
           }, 500);
           return () => clearInterval(cursorTimer);
         }, 500);
@@ -42,11 +41,7 @@ const Hero = () => {
       id="hero"
       className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 sm:pt-10"
     >
-      {/* Background visual effects */}
-      <div className="protocol-bg"></div>
-      <div className="network-nodes"></div>
-      <div className="floating-elements"></div>
-      <div className="mesh-gradient"></div>
+      {/* Removed background layers like protocol-bg, mesh-gradient, etc. */}
 
       {/* Main container */}
       <div className="container mx-auto px-4 sm:px-2 text-center relative z-10">
@@ -63,11 +58,12 @@ const Hero = () => {
               >
                 {displayText}
                 <span
-                  className={`align-middle inline-block ml-2 w-[2px] ${cursorVisible ? 'opacity-100' : 'opacity-0'
-                    } transition-opacity duration-150`}
+                  className={`align-middle inline-block ml-2 w-[2px] ${
+                    cursorVisible ? 'opacity-100' : 'opacity-0'
+                  } transition-opacity duration-150`}
                   style={{
-                    height: '1em', // Makes cursor match text height
-                    backgroundColor: 'black', // Optional styling
+                    height: '1em',
+                    backgroundColor: 'black',
                   }}
                 >
                   &nbsp;
@@ -107,7 +103,9 @@ const Hero = () => {
           {/* Demo Intent Example */}
           <div className="mt-16 animate-fade-in-up animation-delay-1000">
             <div className="glass-effect-light dark:glass-effect p-6 rounded-xl max-w-md mx-auto flex flex-col items-center">
-              <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">Example Intent:</p>
+              <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
+                Example Intent:
+              </p>
               <div className="font-mono text-blue-600 dark:text-blue-300 bg-blue-50 dark:bg-black/20 rounded-lg p-3 w-full text-center mb-4">
                 "Swap 100 USDC → ETH"
               </div>
