@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import Button  from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
@@ -37,10 +37,10 @@ const Navbar = () => {
           isScrolled ? 'glass-navbar-light shadow-2xl' : 'bg-transparent'
         }`}
       >
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-4 sm:px-2 sm:py-2">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <div className="font-display font-bold text-3xl gradient-text cursor-pointer" 
+            <div className="font-display font-bold text-3xl sm:text-2xl gradient-text cursor-pointer" 
                  onClick={() => scrollToSection('hero')}>
               Cruxchain
             </div>
@@ -51,7 +51,7 @@ const Navbar = () => {
                 <button 
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
-                  className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-all duration-300 hover:scale-105 font-medium"
+                  className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-all duration-300 hover:scale-105 font-medium text-base sm:text-sm"
                 >
                   {link.label}
                 </button>
@@ -59,7 +59,7 @@ const Navbar = () => {
               
               <Button 
                 onClick={() => scrollToSection('waitlist')}
-                className="glow-button-light text-white px-6 py-2 rounded-xl font-semibold transition-all duration-300 hover:scale-105"
+                className="glow-button-light text-white px-6 py-2 rounded-xl font-semibold transition-all duration-300 hover:scale-105 text-base sm:text-sm"
               >
                 Join Waitlist
               </Button>
