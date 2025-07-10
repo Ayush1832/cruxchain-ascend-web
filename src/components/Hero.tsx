@@ -1,5 +1,3 @@
-// ✅ Hero.tsx (with backgrounds restored and z-index fixed)
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -10,7 +8,24 @@ const Hero = () => {
   const [displayText, setDisplayText] = useState('');
   const fullText = 'Cruxchain';
   const [cursorVisible, setCursorVisible] = useState(true);
+  const [hasJoined, setHasJoined] = useState(false);
+  const [emailCount, setEmailCount] = useState<number | null>(null);
 
+
+  useEffect(() => {
+    const joined = localStorage.getItem('joined');
+    if (joined) setHasJoined(true);
+
+    const fetchCount = async () => {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/waitlist/count`);
+      const data = await res.json();
+      setEmailCount(data.count);
+    };
+
+    fetchCount();
+  }, []);
+
+  // Typing effect
   useEffect(() => {
     let currentIndex = 0;
     const timer = setInterval(() => {
@@ -30,6 +45,9 @@ const Hero = () => {
     return () => clearInterval(timer);
   }, []);
 
+  // Check if user already joined + fetch waitlist count
+
+
   const scrollToWaitlist = () => {
     const element = document.getElementById('waitlist');
     if (element) {
@@ -42,7 +60,7 @@ const Hero = () => {
       id="hero"
       className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 sm:pt-10"
     >
-      {/* ✅ Background layers restored */}
+      {/* ✅ Background layers */}
       <div className="protocol-bg absolute inset-0 z-0"></div>
       <div className="network-nodes absolute inset-0 z-0"></div>
       <div className="floating-elements absolute inset-0 z-0"></div>
@@ -65,6 +83,7 @@ const Hero = () => {
                 </span>
               </span>
             </h1>
+
             <div className="glass-effect-light dark:glass-effect p-4 rounded-2xl inline-block">
               <p className="text-xl md:text-3xl sm:text-lg text-gray-800 dark:text-gray-200 font-medium">
                 The Intent-Centric Blockchain
@@ -78,10 +97,13 @@ const Hero = () => {
           <div className="space-y-6">
             <Button
               onClick={scrollToWaitlist}
-              className="glow-button-light dark:glow-button text-white px-12 py-6 rounded-2xl text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+              disabled={hasJoined}
+              className={`glow-button-light dark:glow-button text-white px-12 py-6 rounded-2xl text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg ${hasJoined ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              Join Waitlist
+              {hasJoined ? "You're on the List ✅" : "Join Waitlist"}
             </Button>
+
+
             <div className="mt-8 text-center">
               <div className="glass-effect-light dark:glass-effect p-4 rounded-xl inline-block">
                 <p className="text-gray-600 dark:text-gray-400 text-sm max-w-md mx-auto">
@@ -97,6 +119,7 @@ const Hero = () => {
               <div className="font-mono text-blue-600 dark:text-blue-300 bg-blue-50 dark:bg-black/20 rounded-lg p-3 w-full text-center mb-4">
                 "Swap 100 USDC → ETH"
               </div>
+
               <button
                 type="button"
                 aria-label="Scroll for more"
@@ -105,11 +128,18 @@ const Hero = () => {
               >
                 <ChevronDown className="w-6 h-6 text-gray-700 dark:text-gray-300" />
               </button>
+
               <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
                 No gas setup, no chain selection needed
               </p>
             </div>
           </div>
+
+          {emailCount !== null && (
+            <p className="mt-10 text-sm text-gray-500 dark:text-gray-400">
+              👥 <strong>{emailCount}</strong> users already on the waitlist!
+            </p>
+          )}
         </div>
       </div>
     </section>
