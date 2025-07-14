@@ -67,14 +67,20 @@ const Waitlist = () => {
         title: 'Welcome to Cruxchain!',
         description: "You've been added to the waitlist! 🎉 You've earned 100 points!",
       });
+
       localStorage.setItem('joined', 'true');
       setEmail('');
       setName('');
     } catch (error: any) {
+      const isAlreadyJoined = error.message?.toLowerCase().includes("already");
+
       toast({
-        title: 'Error',
-        description: error.message,
-        variant: 'destructive',
+        title: 'Alert',
+        description: error.message || 'Something went wrong.',
+        variant: isAlreadyJoined ? 'default' : 'destructive',
+        className: isAlreadyJoined
+          ? 'bg-white text-black border border-gray-300'
+          : undefined,
       });
     } finally {
       setIsSubmitting(false);
@@ -83,7 +89,6 @@ const Waitlist = () => {
 
   return (
     <section id="waitlist" className="py-32 sm:py-16 relative">
-      {/* Background Effects */}
       <div className="protocol-bg"></div>
       <div className="network-nodes"></div>
 
@@ -91,7 +96,6 @@ const Waitlist = () => {
         <div className="max-w-4xl mx-auto text-center">
           <div className="gradient-border-light dark:gradient-border p-12 sm:p-4 rounded-3xl relative">
             <div className="space-y-8">
-              {/* Header */}
               <div className="space-y-4">
                 <div className="inline-block glass-effect-light dark:glass-effect p-3 rounded-xl mb-4">
                   <span className="text-green-600 dark:text-green-400 font-semibold text-sm uppercase tracking-wider">
@@ -108,7 +112,6 @@ const Waitlist = () => {
                 </p>
               </div>
 
-              {/* Email Form */}
               <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
                 <div className="relative">
                   <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500 dark:text-gray-400" />
@@ -158,6 +161,7 @@ const Waitlist = () => {
                   </p>
                 )}
               </form>
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
                 <div className="glass-effect-light dark:glass-effect p-6 rounded-xl">
                   <Users className="w-8 h-8 text-blue-600 dark:text-blue-400 mx-auto mb-3" />
@@ -178,7 +182,6 @@ const Waitlist = () => {
                 </div>
               </div>
 
-              {/* Benefits */}
               <div className="text-center mt-8">
                 <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
                   Join 1000+ developers and Web3 enthusiasts already on the waitlist
@@ -199,7 +202,6 @@ const Waitlist = () => {
             </div>
           </div>
 
-          {/* Additional Info */}
           <div className="mt-16 text-center">
             <p className="text-gray-600 dark:text-gray-400 text-sm">
               Be the first to test the Cruxchain Testnet and experience the future of intent-centric blockchain interaction.
