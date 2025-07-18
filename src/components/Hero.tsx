@@ -1,17 +1,56 @@
-// ✅ Hero.tsx (with backgrounds restored and z-index fixed)
-
 'use client';
-
 import { useState, useEffect } from 'react';
 import Button from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
+import * as FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 const Hero = () => {
   const [displayText, setDisplayText] = useState('');
+  const [hasJoined, setHasJoined] = useState(false);
+  const [emailCount, setEmailCount] = useState<number | null>(null);
+  const [userPosition, setUserPosition] = useState<number | null>(null);
   const fullText = 'Cruxchain';
-  const [cursorVisible, setCursorVisible] = useState(true);
 
   useEffect(() => {
+    const joined = localStorage.getItem('joined');
+    if (joined) setHasJoined(true);
+
+    const fetchCount = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/waitlist/count`);
+        const data = await res.json();
+        setEmailCount(data.count);
+      } catch (error) {
+        console.error('Failed to fetch waitlist count:', error);
+      }
+    };
+
+    const fetchUserPosition = async () => {
+      try {
+        const fp = await FingerprintJS.load();
+        const result = await fp.get();
+        const fingerprint = result.visitorId;
+
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/waitlist/position`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fingerprint }),
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          setUserPosition(data.position);
+        } else {
+          console.warn('User position not available');
+        }
+      } catch (error) {
+        console.error('Failed to fetch user position:', error);
+      }
+    };
+
+    fetchCount();
+    fetchUserPosition();
+
     let currentIndex = 0;
     const timer = setInterval(() => {
       if (currentIndex <= fullText.length) {
@@ -19,30 +58,19 @@ const Hero = () => {
         currentIndex++;
       } else {
         clearInterval(timer);
-        setTimeout(() => {
-          const cursorTimer = setInterval(() => {
-            setCursorVisible((prev) => !prev);
-          }, 500);
-          return () => clearInterval(cursorTimer);
-        }, 500);
       }
     }, 150);
+
     return () => clearInterval(timer);
   }, []);
 
   const scrollToWaitlist = () => {
-    const element = document.getElementById('waitlist');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <section
-      id="hero"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 sm:pt-10"
-    >
-      {/* ✅ Background layers restored */}
+    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 sm:pt-10">
+      {/* Background Layers */}
       <div className="protocol-bg absolute inset-0 z-0"></div>
       <div className="network-nodes absolute inset-0 z-0"></div>
       <div className="floating-elements absolute inset-0 z-0"></div>
@@ -57,14 +85,9 @@ const Hero = () => {
                 style={{ WebkitTextStroke: '6px black', WebkitTextFillColor: 'white' }}
               >
                 {displayText}
-                <span
-                  className={`align-middle inline-block ml-2 w-[2px] ${cursorVisible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-150`}
-                  style={{ height: '1em', backgroundColor: 'black' }}
-                >
-                  &nbsp;
-                </span>
               </span>
             </h1>
+
             <div className="glass-effect-light dark:glass-effect p-4 rounded-2xl inline-block">
               <p className="text-xl md:text-3xl sm:text-lg text-gray-800 dark:text-gray-200 font-medium">
                 The Intent-Centric Blockchain
@@ -76,12 +99,12 @@ const Hero = () => {
           </div>
 
           <div className="space-y-6">
-            <Button
-              onClick={scrollToWaitlist}
-              className="glow-button-light dark:glow-button text-white px-12 py-6 rounded-2xl text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
-            >
-              Join Waitlist
+            <Button onClick={scrollToWaitlist} disabled={hasJoined}
+              className={`glow-button-light dark:glow-button text-white px-12 py-6 rounded-2xl text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg ${hasJoined ? 'opacity-50 cursor-not-allowed' : ''
+                }`}>
+              {hasJoined ? "You're on the List ✅" : "Join Waitlist"}
             </Button>
+
             <div className="mt-8 text-center">
               <div className="glass-effect-light dark:glass-effect p-4 rounded-xl inline-block">
                 <p className="text-gray-600 dark:text-gray-400 text-sm max-w-md mx-auto">
@@ -97,12 +120,9 @@ const Hero = () => {
               <div className="font-mono text-blue-600 dark:text-blue-300 bg-blue-50 dark:bg-black/20 rounded-lg p-3 w-full text-center mb-4">
                 "Swap 100 USDC → ETH"
               </div>
-              <button
-                type="button"
-                aria-label="Scroll for more"
+              <button type="button" aria-label="Scroll for more"
                 className="mt-2 mb-2 flex items-center justify-center w-10 h-10 rounded-full bg-white/80 dark:bg-black/40 shadow border border-gray-200 dark:border-white/10 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
-                onClick={scrollToWaitlist}
-              >
+                onClick={scrollToWaitlist}>
                 <ChevronDown className="w-6 h-6 text-gray-700 dark:text-gray-300" />
               </button>
               <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
@@ -110,6 +130,20 @@ const Hero = () => {
               </p>
             </div>
           </div>
+          <div className="glass-effect-light dark:glass-effect p-6 rounded-xl mt-10 mb-10 max-w-md mx-auto flex flex-col items-center">
+            {emailCount !== null && (
+              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                👥 <strong>{emailCount}</strong> users already on the waitlist!
+              </p>
+            )}
+
+            {userPosition !== null && (
+              <p className="mt-2 text-sm text-green-600 dark:text-green-400">
+                🎉 You are user number <strong>{userPosition}</strong> on the waitlist!
+              </p>
+            )}
+          </div>
+
         </div>
       </div>
     </section>
