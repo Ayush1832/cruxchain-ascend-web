@@ -16,6 +16,29 @@ const router = express.Router();
 //   }
 // });
 
+// ✅ Get user position in the waitlist
+router.post('/position', async (req, res) => {
+  try {
+    const { email, fingerprint } = req.body;
+
+    if (!email && !fingerprint) {
+      return res.status(400).json({ message: 'Email or fingerprint is required' });
+    }
+
+    const user = await Waitlist.findOne({ $or: [{ email }, { fingerprint }] }).sort({ createdAt: 1 });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found in waitlist' });
+    }
+
+    const position = await Waitlist.countDocuments({ createdAt: { $lt: user.createdAt } }) + 1;
+
+    res.status(200).json({ position });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching position', error });
+  }
+});
+
 
 // ✅ Get total number of users in the waitlist
 router.get('/count', async (req, res) => {

@@ -2,11 +2,13 @@
 import { useState, useEffect } from 'react';
 import Button from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
+import * as FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 const Hero = () => {
   const [displayText, setDisplayText] = useState('');
   const [hasJoined, setHasJoined] = useState(false);
   const [emailCount, setEmailCount] = useState<number | null>(null);
+  const [userPosition, setUserPosition] = useState<number | null>(null);
   const fullText = 'Cruxchain';
 
   useEffect(() => {
@@ -23,9 +25,32 @@ const Hero = () => {
       }
     };
 
+    const fetchUserPosition = async () => {
+      try {
+        const fp = await FingerprintJS.load();
+        const result = await fp.get();
+        const fingerprint = result.visitorId;
+
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/waitlist/position`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fingerprint }),
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          setUserPosition(data.position);
+        } else {
+          console.warn('User position not available');
+        }
+      } catch (error) {
+        console.error('Failed to fetch user position:', error);
+      }
+    };
+
     fetchCount();
-    
-    // Typing effect
+    fetchUserPosition();
+
     let currentIndex = 0;
     const timer = setInterval(() => {
       if (currentIndex <= fullText.length) {
@@ -35,7 +60,7 @@ const Hero = () => {
         clearInterval(timer);
       }
     }, 150);
-    
+
     return () => clearInterval(timer);
   }, []);
 
@@ -45,7 +70,7 @@ const Hero = () => {
 
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 sm:pt-10">
-      {/* Background layers */}
+      {/* Background Layers */}
       <div className="protocol-bg absolute inset-0 z-0"></div>
       <div className="network-nodes absolute inset-0 z-0"></div>
       <div className="floating-elements absolute inset-0 z-0"></div>
@@ -55,8 +80,10 @@ const Hero = () => {
         <div className="max-w-5xl mx-auto">
           <div className="mb-8">
             <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-display font-bold mb-6 whitespace-nowrap">
-              <span className="text-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]" 
-                    style={{ WebkitTextStroke: '6px black', WebkitTextFillColor: 'white' }}>
+              <span
+                className="text-black drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
+                style={{ WebkitTextStroke: '6px black', WebkitTextFillColor: 'white' }}
+              >
                 {displayText}
               </span>
             </h1>
@@ -73,9 +100,8 @@ const Hero = () => {
 
           <div className="space-y-6">
             <Button onClick={scrollToWaitlist} disabled={hasJoined}
-              className={`glow-button-light dark:glow-button text-white px-12 py-6 rounded-2xl text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg ${
-                hasJoined ? 'opacity-50 cursor-not-allowed' : ''
-              }`}>
+              className={`glow-button-light dark:glow-button text-white px-12 py-6 rounded-2xl text-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg ${hasJoined ? 'opacity-50 cursor-not-allowed' : ''
+                }`}>
               {hasJoined ? "You're on the List ✅" : "Join Waitlist"}
             </Button>
 
@@ -104,12 +130,20 @@ const Hero = () => {
               </p>
             </div>
           </div>
+          <div className="glass-effect-light dark:glass-effect p-6 rounded-xl mt-10 mb-10 max-w-md mx-auto flex flex-col items-center">
+            {emailCount !== null && (
+              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                👥 <strong>{emailCount}</strong> users already on the waitlist!
+              </p>
+            )}
 
-          {emailCount !== null && (
-            <p className="mt-10 text-sm text-gray-500 dark:text-gray-400">
-              👥 <strong>{emailCount}</strong> users already on the waitlist!
-            </p>
-          )}
+            {userPosition !== null && (
+              <p className="mt-2 text-sm text-green-600 dark:text-green-400">
+                🎉 You are user number <strong>{userPosition}</strong> on the waitlist!
+              </p>
+            )}
+          </div>
+
         </div>
       </div>
     </section>
